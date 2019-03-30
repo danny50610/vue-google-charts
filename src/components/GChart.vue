@@ -37,6 +37,9 @@ export default {
     createChart: {
       type: Function
     },
+    createdDataTable: {
+      type: Function
+    },
     resizeDebounce: {
       type: Number,
       default: 200
@@ -92,11 +95,17 @@ export default {
     },
 
     getValidChartData () {
-      if (this.data instanceof chartsLib.visualization.DataTable) return this.data
-      if (this.data instanceof chartsLib.visualization.DataView) return this.data
-      if (Array.isArray(this.data)) return chartsLib.visualization.arrayToDataTable(this.data)
-      if (this.data !== null && typeof this.data === 'object') return new chartsLib.visualization.DataTable(this.data)
-      return null
+      let result = null
+      if (this.data instanceof chartsLib.visualization.DataTable) result = this.data
+      else if (this.data instanceof chartsLib.visualization.DataView) result = this.data
+      else if (Array.isArray(this.data)) result = chartsLib.visualization.arrayToDataTable(this.data)
+      else if (this.data !== null && typeof this.data === 'object') result = new chartsLib.visualization.DataTable(this.data)
+      if (result) {
+        if (this.createdDataTable !== undefined) {
+          this.createdDataTable(result)
+        }
+      }
+      return result
     },
 
     createChartObject () {
