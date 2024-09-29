@@ -46,6 +46,10 @@ export default {
       type: Function,
       default: null,
     },
+    createdDataTable: {
+      type: Function,
+      default: null,
+    },
     resizeDebounce: {
       type: Number,
       default: 200,
@@ -122,7 +126,8 @@ export default {
       const data = getValidChartData(
         chartsLib,
         this.data,
-        this.isFirstRowLabels
+        this.isFirstRowLabels,
+        this.createdDataTable
       );
       if (data) this.chartObject.draw(data, this.options);
     },

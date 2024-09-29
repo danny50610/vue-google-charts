@@ -16,28 +16,37 @@ export interface ICreateChartFunction {
   ): GoogleChartWrapper;
 }
 
+export interface ICreateDataTableFunction {
+  (dataTable: GoogleDataTable | GoogleDataView): void;
+}
+
 export function getValidChartData(
   chartsLib: null | GoogleViz,
   data: unknown[][] | GoogleDataTable | Record<string, any> | null,
-  isFirstRowLabels?: boolean
+  isFirstRowLabels?: boolean,
+  createDataTableFunction?: ICreateDataTableFunction
 ): GoogleDataTable | GoogleDataView | null {
-  if (chartsLib !== null && data instanceof chartsLib.visualization.DataTable) {
-    return data;
+  let result = null;
+
+  if (
+    chartsLib !== null &&
+    (data instanceof chartsLib.visualization.DataTable ||
+      data instanceof chartsLib.visualization.DataView)
+  ) {
+    result = data;
+  } else if (chartsLib !== null && Array.isArray(data)) {
+    result = chartsLib.visualization.arrayToDataTable(data, isFirstRowLabels);
+  } else if (chartsLib !== null && data !== null && typeof data === 'object') {
+    result = new chartsLib.visualization.DataTable(data);
   }
 
-  if (chartsLib !== null && data instanceof chartsLib.visualization.DataView) {
-    return data;
+  if (result) {
+    if (createDataTableFunction !== undefined) {
+      createDataTableFunction(result);
+    }
   }
 
-  if (chartsLib !== null && Array.isArray(data)) {
-    return chartsLib.visualization.arrayToDataTable(data, isFirstRowLabels);
-  }
-
-  if (chartsLib !== null && data !== null && typeof data === 'object') {
-    return new chartsLib.visualization.DataTable(data);
-  }
-
-  return null;
+  return result;
 }
 
 export function createChartObject(

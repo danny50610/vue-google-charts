@@ -23,6 +23,7 @@ import {
   createChartObject,
   getValidChartData,
   ICreateChartFunction,
+  ICreateDataTableFunction,
 } from '../utils';
 
 import { loadGoogleCharts } from '../lib/google-charts-loader';
@@ -69,6 +70,10 @@ export const GChart = defineComponent({
       type: Function as PropType<ICreateChartFunction>,
       default: undefined,
     },
+    createdDataTable: {
+      type: Function as PropType<ICreateDataTableFunction>,
+      default: undefined,
+    },
     resizeDebounce: {
       type: Number,
       default: 200,
@@ -86,7 +91,8 @@ export const GChart = defineComponent({
       const data = getValidChartData(
         chartsLib,
         props.data,
-        props.isFirstRowLabels
+        props.isFirstRowLabels,
+        props.createdDataTable
       );
       if (data !== null) {
         chartObject.value?.draw(data, props.options);
