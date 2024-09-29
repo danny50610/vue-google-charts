@@ -6,14 +6,11 @@
     "name": "Refat",
     "email": "nobilix@gmail.com"
   },
-  "homepage": "https://github.com/devstark-com/vue-google-charts#readme",
+  "homepage": "https://github.com/danny50610/vue-google-charts",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devstark-com/vue-google-charts.git"
-  },
-  "bugs": {
-    "url": "https://github.com/devstark-com/vue-google-charts/issues"
+    "url": "git@github.com:danny50610/vue-google-charts.git"
   },
   "main": "./src/index.ts",
   "types": "./dist/index.d.ts",

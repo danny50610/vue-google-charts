@@ -6,6 +6,8 @@
 
 Reactive Vue.js wrapper for Google Charts lib
 
+Forked from [https://github.com/devstark-com/vue-google-charts](https://github.com/devstark-com/vue-google-charts)
+
 <br />
 <a href="#installation">Installation</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
