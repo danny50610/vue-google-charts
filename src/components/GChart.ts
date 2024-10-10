@@ -79,7 +79,7 @@ export const GChart = defineComponent({
       default: 200,
     },
   },
-  setup(props, { emit }) {
+  setup(props, { expose, emit }) {
     const chartObject = ref<GoogleChartWrapper | null>(null);
     const chartEl = ref<HTMLElement | null>(null);
 
@@ -169,6 +169,10 @@ export const GChart = defineComponent({
           debounce(drawChart, props.resizeDebounce) as EventListener
         );
       }
+    });
+
+    expose({
+      chartObject,
     });
 
     return () => h('div', { ref: chartEl }, []);
